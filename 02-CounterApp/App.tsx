@@ -1,9 +1,16 @@
 import React from 'react'
-import CounterScreen from './src/screens/CounterScreen'
+import { SafeAreaView } from 'react-native'
+import BoxObjectModelScreen from './src/screens/BoxObjectModelScreen'
+
+/* import CounterScreen from './src/screens/CounterScreen' */
 
 const App = () => {
   return (
-    <CounterScreen />
+    <SafeAreaView>
+      {/*  <CounterScreen /> */}
+      <BoxObjectModelScreen />
+    </SafeAreaView>
+
   )
 }
 

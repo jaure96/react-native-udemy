@@ -12,7 +12,7 @@ target 'CounterApp' do
     :hermes_enabled => false
   )
 
-  target 'p2Tests' do
+  target 'CounterAppTests' do
     inherit! :complete
     # Pods for testing
   end

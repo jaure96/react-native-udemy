@@ -1,4 +1,4 @@
-package com.CounterApp;
+package com.counterapp;
 
 import com.facebook.react.ReactActivity;
 
