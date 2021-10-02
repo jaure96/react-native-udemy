@@ -15,7 +15,30 @@ const CanculatorScreen = () => {
     }
 
     const buildNumber = (textNumber: string) => {
-        setNumber(number + textNumber)
+
+        //Do not accept double dots
+        if (number.includes('.') && textNumber === '.') return
+        if (number.startsWith('0') || number.startsWith('-0')) {
+            //Decimal point
+            if (textNumber === '.') {
+                setNumber(number + textNumber)
+                //Evaluate if is anothe 0 and there is a point
+            } else if (textNumber === '0' && number.includes('.')) {
+                setNumber(number + textNumber)
+                //Is not 0 and it has not a dot
+            } else if (textNumber !== '0' && !number.includes('.')) {
+                setNumber(textNumber)
+                //Avoid 000.0
+            } else if (textNumber === '0' && number.includes('.')) {
+                setNumber(number)
+            } else {
+                setNumber(number + textNumber)
+            }
+        } else {
+            setNumber(number + textNumber)
+        }
+
+
     }
 
     const positiveNegative = () => {
