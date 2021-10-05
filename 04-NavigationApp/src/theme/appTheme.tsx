@@ -37,7 +37,16 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     menuButton: {
-        marginTop: 10
+        marginTop: 10,
+        flexDirection: 'row',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
+    menuIcon:{
+        height:20,
+        width:20,
+        color: 'black',
+        marginRight: 20
     },
     menuText: {
         color: 'black',
