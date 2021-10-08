@@ -17,6 +17,12 @@ const Tab2Screen = () => {
             <Text>
                 <Icon name="flight" size={50} color="#900" />
             </Text>
+            <Text>
+                <Icon name="chat" size={50} color="#900" />
+            </Text>
+            <Text>
+                <Icon name="send" size={50} color="#900" />
+            </Text>
 
         </View>
     )
