@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const Tab2Screen = () => {
 
-    const { signIn, authState: { isLoggedIn } } = useContext(AuthContext)
+    const { signIn, logOut, authState: { isLoggedIn } } = useContext(AuthContext)
 
     return (
         <View style={styles.globalMagin}>
@@ -14,6 +14,11 @@ const Tab2Screen = () => {
             {!isLoggedIn && <Button
                 title='Sign in'
                 onPress={signIn}
+            />}
+
+            {isLoggedIn && <Button
+                title='Log out'
+                onPress={logOut}
             />}
 
         </View>
