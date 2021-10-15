@@ -12,7 +12,6 @@ interface Props {
 const MoviePoster = ({ movie, width = 300, height = 420 }: Props) => {
 
     const navigation = useNavigation()
-
     const uri = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
 
     return (
