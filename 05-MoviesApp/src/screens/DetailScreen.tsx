@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
-import { ActivityIndicator, Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { RootStackParams } from '../navigation/Navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -41,8 +41,17 @@ const DetailScreen = ({ navigation, route }: Props) => {
                     <ActivityIndicator size={30} color='red' style={{ marginTop: 20 }} /> :
                     <MovieDetails movieFull={movieFull!} cast={cast} />
                 }
-
             </View>
+
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()} >
+                <Icon
+                    color='white'
+                    name='chevron-left'
+                    size={60}
+                />
+            </TouchableOpacity>
+
+
         </ScrollView>
 
 
@@ -84,6 +93,13 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 20
+    },
+    backButton: {
+        position: 'absolute',
+        zIndex: 999,
+        elevation: 30,
+        top: 5,
+        left: 0
     }
 
 });
