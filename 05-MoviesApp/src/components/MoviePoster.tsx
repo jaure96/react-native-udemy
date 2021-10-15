@@ -19,7 +19,7 @@ const MoviePoster = ({ movie, width = 300, height = 420 }: Props) => {
         <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate('detailScreen' as never, movie as never)}
-            style={{ width, height, marginHorizontal: 8 }}
+            style={{ width, height, marginHorizontal: 2, paddingBottom: 20, paddingHorizontal: 5 }}
         >
             <View style={styles.imageContainer}>
                 <Image source={{ uri }} style={styles.image} />
