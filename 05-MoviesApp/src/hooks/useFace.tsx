@@ -9,7 +9,7 @@ interface Props {
 const useFace = ({ initialOpacity, duration }: Props) => {
     const opacity = useRef(new Animated.Value(initialOpacity)).current
 
-    const fadeIn = () => {
+    const fadeIn = (callBack?: Function) => {
         Animated.timing(
             opacity,
             {
@@ -17,7 +17,7 @@ const useFace = ({ initialOpacity, duration }: Props) => {
                 duration,
                 useNativeDriver: true
             }
-        ).start()
+        ).start(() => callBack ? callBack() : null)
     }
 
     const fadeOut = () => {
