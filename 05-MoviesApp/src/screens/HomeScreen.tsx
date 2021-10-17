@@ -6,11 +6,16 @@ import Carousel from 'react-native-snap-carousel';
 import useMovies from '../hooks/useMovies'
 import MoviePoster from '../components/MoviePoster';
 import HorizontalSlider from '../components/HorizontalSlider';
+import GradientBackground from '../components/GradientBackground';
 
 const { width: windowWidth } = Dimensions.get('window')
 const HomeScreen = () => {
     const { top } = useSafeAreaInsets()
     const { nowPlaying, popular, topRated, upcoming, isLoading } = useMovies()
+
+    const getPosterColor = (index: number) => {
+        console.log(index)
+    }
 
 
     if (isLoading) {
@@ -22,25 +27,29 @@ const HomeScreen = () => {
     }
 
     return (
-        <ScrollView>
-            <View style={{ marginTop: top + 20 }}>
+        <GradientBackground >
+            <ScrollView>
+                <View style={{ marginTop: top + 20 }}>
 
-                <View style={{ height: 440 }}>
-                    <Carousel
-                        data={nowPlaying}
-                        renderItem={({ item }: any) => <MoviePoster movie={item} />}
-                        sliderWidth={windowWidth}
-                        itemWidth={300}
-                        inactiveSlideOpacity={0.9}
-                    />
+                    <View style={{ height: 440 }}>
+                        <Carousel
+                            data={nowPlaying}
+                            renderItem={({ item }: any) => <MoviePoster movie={item} />}
+                            sliderWidth={windowWidth}
+                            itemWidth={300}
+                            inactiveSlideOpacity={0.9}
+                            onSnapToItem={index => getPosterColor(index)}
+                        />
+                    </View>
+                    <HorizontalSlider title='Popular' movies={popular} />
+                    <HorizontalSlider title='Top rated' movies={topRated} />
+                    <HorizontalSlider title='Upcoming' movies={upcoming} />
+
+
                 </View>
-                <HorizontalSlider title='Popular' movies={popular} />
-                <HorizontalSlider title='Top rated' movies={topRated} />
-                <HorizontalSlider title='Upcoming' movies={upcoming} />
+            </ScrollView>
+        </GradientBackground>
 
-
-            </View>
-        </ScrollView>
     )
 }
 
