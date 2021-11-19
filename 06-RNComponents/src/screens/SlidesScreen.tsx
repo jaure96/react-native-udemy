@@ -1,7 +1,8 @@
-import React from 'react'
-import { Dimensions, Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react'
+import { Dimensions, Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { HeaderTitle } from '../components/HeaderTitle';
 
@@ -32,6 +33,8 @@ const items: Slide[] = [
 ]
 
 export const SlidesScreen = () => {
+
+    const [currentIndex, setCurrentIndex] = useState(0)
 
     const renderItem = (item: Slide) => {
         return <View
@@ -69,8 +72,57 @@ export const SlidesScreen = () => {
                 sliderWidth={screenWidth}
                 itemWidth={screenWidth}
                 layout='default'
+                onSnapToItem={index => {
+                    setCurrentIndex(index)
+                }}
             />
-        </SafeAreaView>
+            <View
+                style={{
+                   flexDirection: 'row',
+                   justifyContent: 'space-between',
+                   marginHorizontal: 20,
+                   alignItems: 'center'
+                }}
+            >
+                <Pagination
+                    dotsLength={items.length}
+                    activeDotIndex={currentIndex}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: '#5856D6'
+                    }}
+                />
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        backgroundColor: '#5856D6',
+                        width: 140,
+                        height: 50,
+                        borderRadius: 10,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    activeOpacity={0.9}
+                >
+                    <Text
+                        style={{
+                            fontSize: 25,
+                            color: 'white'
+                        }}
+                    >
+                        Entrar
+                    </Text>
+                    <Icon
+                        name='chevron-forward-outline'
+                        color='white'
+                        size={30}
+                    />
+                </TouchableOpacity>
+            </View>
+
+        </SafeAreaView >
     )
 }
 
