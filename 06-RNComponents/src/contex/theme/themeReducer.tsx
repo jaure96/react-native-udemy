@@ -10,19 +10,28 @@ export interface ThemeState extends Theme {
     dividerColor: string
 }
 
-const lightTheme: ThemeState = {
+export const lightTheme: ThemeState = {
     currentTheme: 'light',
     dark: false,
-    colors:{
+    colors: {
         primary: 'red',
-        background: 'blue',
+        background: 'white',
         card: 'green',
         text: 'pink',
         border: 'orange',
         notification: 'teal'
-    }
+    },
+    dividerColor: 'rgba(0,0,0,0.7)'
 }
 
-export const themeReduce = (state, action: ThemeAction):=> {
+export const themeReducer = (state: ThemeState, action: ThemeAction): ThemeState => {
 
+    switch (action.type) {
+        case 'set_dark_theme':
+            return { ...lightTheme }
+
+
+        default:
+            return state
+    }
 }
