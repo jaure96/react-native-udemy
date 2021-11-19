@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { View, ScrollView, RefreshControl } from 'react-native'
-import {  } from 'react-native-gesture-handler';
+import { } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HeaderTitle } from '../components/HeaderTitle';
+import { ThemeContext } from '../contex/theme/ThemeContext';
 import { styles } from '../theme/appTheme';
+import { darkTheme } from '../contex/theme/themeReducer';
 
 export const PullToRefreshScreen = () => {
 
-    const { top } =useSafeAreaInsets();
+    const { top } = useSafeAreaInsets();
+    const { theme: { colors, dividerColor, dark } } = useContext(ThemeContext)
 
-    const [ refreshing, setRefreshing] = useState(false);
-    const [ data, setData] = useState<string>();
+    const [refreshing, setRefreshing] = useState(false);
+    const [data, setData] = useState<string>();
 
     const onRefresh = () => {
         setRefreshing(true);
@@ -28,25 +31,24 @@ export const PullToRefreshScreen = () => {
                 marginTop: refreshing ? top : 0
             }}
             refreshControl={
-                <RefreshControl 
-                    refreshing={ refreshing }
-                    onRefresh={ onRefresh }
-                    progressViewOffset={ 10 }
-                    progressBackgroundColor="#5856D6"
-                    colors={ ['white','red','orange'] }
-                    // style={{ backgroundColor: '#5856D6' }}
-                    // tintColor="white"
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    progressViewOffset={10}
+                    progressBackgroundColor={dividerColor}
+                    colors={[colors.text]}
+                    tintColor={dark ? 'white' : 'black'}
                 />
             }
         >
-            <View style={ styles.globalMargin }>
+            <View style={styles.globalMargin}>
                 <HeaderTitle title="Pull to refresh" />
 
                 {
-                    data && <HeaderTitle title={ data } />
+                    data && <HeaderTitle title={data} />
                 }
-                
-                
+
+
             </View>
         </ScrollView>
     )
