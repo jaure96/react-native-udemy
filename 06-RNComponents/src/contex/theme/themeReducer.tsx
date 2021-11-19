@@ -14,10 +14,24 @@ export const lightTheme: ThemeState = {
     currentTheme: 'light',
     dark: false,
     colors: {
-        primary: 'red',
+        primary: '#00a9be',
         background: 'white',
         card: 'green',
-        text: 'pink',
+        text: 'black',
+        border: 'orange',
+        notification: 'teal'
+    },
+    dividerColor: 'rgba(0,0,0,0.7)'
+}
+
+export const darkTheme: ThemeState = {
+    currentTheme: 'dark',
+    dark: true,
+    colors: {
+        primary: '#90caf9',
+        background: 'black',
+        card: 'green',
+        text: 'white',
         border: 'orange',
         notification: 'teal'
     },
@@ -27,9 +41,11 @@ export const lightTheme: ThemeState = {
 export const themeReducer = (state: ThemeState, action: ThemeAction): ThemeState => {
 
     switch (action.type) {
-        case 'set_dark_theme':
+        case 'set_light_theme':
             return { ...lightTheme }
 
+        case 'set_dark_theme':
+            return { ...darkTheme }
 
         default:
             return state
