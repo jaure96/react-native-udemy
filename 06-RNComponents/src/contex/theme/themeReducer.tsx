@@ -16,12 +16,12 @@ export const lightTheme: ThemeState = {
     colors: {
         primary: '#00a9be',
         background: 'white',
-        card: 'green',
+        card: 'white',
         text: 'black',
-        border: 'orange',
+        border: 'black',
         notification: 'teal'
     },
-    dividerColor: 'rgba(0,0,0,0.7)'
+    dividerColor: 'rgba(0,0,0,0.6)'
 }
 
 export const darkTheme: ThemeState = {
@@ -30,12 +30,12 @@ export const darkTheme: ThemeState = {
     colors: {
         primary: '#90caf9',
         background: 'black',
-        card: 'green',
+        card: 'black',
         text: 'white',
-        border: 'orange',
+        border: 'black',
         notification: 'teal'
     },
-    dividerColor: 'rgba(0,0,0,0.7)'
+    dividerColor: 'rgba(255,255,255,0.6)'
 }
 
 export const themeReducer = (state: ThemeState, action: ThemeAction): ThemeState => {
