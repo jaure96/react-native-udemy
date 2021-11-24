@@ -1,11 +1,13 @@
 import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import Navigator from './src/navigator/Navigator';
 
 const App = () => {
   return (
-    <>
-      <Icon name='star' />
-    </>
+    <NavigationContainer>
+      <Navigator/>
+    </NavigationContainer>
   )
 }
 
