@@ -12,18 +12,21 @@ const Map = () => {
         initialPosition,
         userLocation,
         getCurrentLocation,
-        followUserLocation
+        followUserLocation,
+        stopFollowUserLocation
     } = useLocation()
     const mapViewRef = useRef<MapView>()
+    const following = useRef<boolean>(true)
 
     useEffect(() => {
         followUserLocation()
         return () => {
-            //TODO cancelar el seguimiento
+            stopFollowUserLocation()
         }
     }, [])
 
     useEffect(() => {
+        if (!following.current) return
         const { latitude, longitude } = userLocation
         mapViewRef.current?.animateCamera({
             center: { latitude, longitude }
@@ -32,6 +35,7 @@ const Map = () => {
 
     const centerPosition = async () => {
         const { latitude, longitude } = await getCurrentLocation()
+        following.current = true
         mapViewRef.current?.animateCamera({
             center: { latitude, longitude }
         })
@@ -50,6 +54,7 @@ const Map = () => {
                     longitudeDelta: 0.0421,
                 }}
                 showsUserLocation
+                onTouchStart={() => following.current = false}
             >
             </MapView>
             <Fab
