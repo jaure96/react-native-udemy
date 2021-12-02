@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import MapView, { Polyline } from 'react-native-maps';
 import useLocation from '../hooks/useLocation';
 import LoadingScreen from '../screens/LoadingScreen';
@@ -18,6 +18,7 @@ const Map = () => {
     } = useLocation()
     const mapViewRef = useRef<MapView>()
     const following = useRef<boolean>(true)
+    const [showPolyline, setShowPolyline] = useState(true)
 
     useEffect(() => {
         followUserLocation()
@@ -57,11 +58,11 @@ const Map = () => {
                 showsUserLocation
                 onTouchStart={() => following.current = false}
             >
-                <Polyline 
+                {showPolyline && <Polyline
                     coordinates={routeLines}
                     strokeColor='black'
                     strokeWidth={3}
-                />
+                />}
             </MapView>
             <Fab
                 iconName={'compass-outline'}
@@ -69,6 +70,15 @@ const Map = () => {
                 style={{
                     position: 'absolute',
                     bottom: 10,
+                    right: 10
+                }}
+            />
+            <Fab
+                iconName={'brush-outline'}
+                onPress={() => setShowPolyline(val => !val)}
+                style={{
+                    position: 'absolute',
+                    bottom: 80,
                     right: 10
                 }}
             />
