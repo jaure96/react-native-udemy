@@ -29,8 +29,9 @@ export const PermissionsProvider = ({ children }: any) => {
     const [permissions, setPermissions] = useState(permissionInitState)
 
     useEffect(() => {
-        AppState.addEventListener('change', state =>{
-            if( state !== 'active') return 
+        checkLocationPermissions()
+        AppState.addEventListener('change', state => {
+            if (state !== 'active') return
             checkLocationPermissions()
         })
     }, [])
@@ -42,7 +43,7 @@ export const PermissionsProvider = ({ children }: any) => {
         } else {
             permissionStatus = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
         }
-        if(permissionStatus ==='blocked'){
+        if (permissionStatus === 'blocked') {
             openSettings()
         }
 
@@ -52,7 +53,7 @@ export const PermissionsProvider = ({ children }: any) => {
         })
     }
 
-    const checkLocationPermissions =async () => {
+    const checkLocationPermissions = async () => {
         let permissionStatus: PermissionStatus
         if (Platform.OS === 'ios') {
             permissionStatus = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
