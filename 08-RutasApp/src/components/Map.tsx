@@ -2,6 +2,7 @@ import React from 'react'
 import MapView from 'react-native-maps';
 import useLocation from '../hooks/useLocation';
 import LoadingScreen from '../screens/LoadingScreen';
+import Fab from './Fab';
 
 
 const Map = () => {
@@ -22,6 +23,15 @@ const Map = () => {
                 showsUserLocation
             >
             </MapView>
+            <Fab
+                iconName={'star'}
+                onPress={() => console.log('hi fab')}
+                style={{
+                    position: 'absolute',
+                    bottom: 10,
+                    right: 10
+                }}
+            />
         </>
     )
 }
