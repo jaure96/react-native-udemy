@@ -1,11 +1,24 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, TextInput, View } from 'react-native'
+import Background from '../components/Background'
+import WhiteLogo from '../components/WhiteLogo'
+import { loginStyles } from '../theme/loginTheme'
 
 const LoginScreen = () => {
     return (
-        <View>
-            <Text>Login screen</Text>
-        </View>
+        <>
+            <Background />
+
+            <WhiteLogo />
+            <Text style={loginStyles.title} >Login</Text>
+
+            <Text style={loginStyles.label} >Email:</Text>
+            <TextInput 
+                placeholder='Enter your email'
+                placeholderTextColor='rgba(255,255,255,0.4)'
+                keyboardType='email-address'
+            />
+        </>
     )
 }
 
