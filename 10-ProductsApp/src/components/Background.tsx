@@ -9,7 +9,7 @@ const Background = () => {
             style={{
                 position: 'absolute',
                 backgroundColor: '#5856D6',
-                top: -height*0.2,
+                top: -height * 0.2,
                 width: width * 1.6,
                 height: height * 1.2,
                 transform: [
