@@ -1,13 +1,16 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
-import { Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useContext, useEffect } from 'react'
+import { Alert, Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import WhiteLogo from '../components/WhiteLogo'
 import { useForm } from '../hooks/useForm'
 import { loginStyles } from '../theme/loginTheme'
+import { AuthContext } from '../context/AuthContext';
 
 interface Props extends StackScreenProps<any, any> { }
 
 const RegisterScreen = ({ navigation }: Props) => {
+
+    const { signUp, removeError, errorMessage } = useContext(AuthContext)
 
     const { email, password, name, onChange } = useForm({
         email: '',
@@ -15,9 +18,22 @@ const RegisterScreen = ({ navigation }: Props) => {
         name: ''
     })
 
+    useEffect(() => {
+        if (errorMessage.length === 0) return
+        Alert.alert(
+            'Incorrect register',
+            errorMessage,
+            [{ text: 'Ok', onPress: removeError }]
+        )
+    }, [errorMessage])
+
     const onRegister = () => {
-        console.log(email, password, name)
         Keyboard.dismiss()
+        signUp({
+            nombre: name,
+            correo: email,
+            password
+        })
     }
 
     return (
@@ -32,7 +48,7 @@ const RegisterScreen = ({ navigation }: Props) => {
 
                     <Text style={loginStyles.label} >Name:</Text>
                     <TextInput
-                        placeholder='Enter your email'
+                        placeholder='Enter your name'
                         placeholderTextColor='rgba(255,255,255,0.4)'
                         underlineColorAndroid='white'
                         style={[
@@ -40,9 +56,9 @@ const RegisterScreen = ({ navigation }: Props) => {
                             (Platform.OS === 'ios') && loginStyles.inputFieldIOS
                         ]}
                         selectionColor='white'
-                        onChangeText={value => onChange(value, 'email')}
+                        onChangeText={value => onChange(value, 'name')}
                         onSubmitEditing={onRegister}
-                        value={email}
+                        value={name}
                         autoCapitalize={'words'}
                         autoCorrect={false}
                     />
