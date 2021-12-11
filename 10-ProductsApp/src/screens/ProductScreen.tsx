@@ -14,7 +14,7 @@ const ProductScreen = ({ navigation, route }: Props) => {
 
     const { id = '', name = '' } = route.params
     const { categories, isLoading: catLoading } = useCategories()
-    const { loadProductById } = useContext(ProductsContext)
+    const { loadProductById, addProduct, updateProduct } = useContext(ProductsContext)
     const { _id, categoryId, nombre, image, onChange, form, setFormValue } = useForm({
         _id: id,
         categoryId: '',
@@ -25,17 +25,13 @@ const ProductScreen = ({ navigation, route }: Props) => {
 
     useEffect(() => {
         navigation.setOptions({
-            title: name ? name : 'New product'
+            title: nombre ? nombre : 'No product name'
         })
-    }, [])
+    }, [nombre])
 
     useEffect(() => {
         loadProduct()
     }, [])
-
-    useEffect(() => {
-        console.log(categoryId)
-    }, [categoryId])
 
     const loadProduct = async () => {
         if (id.length === 0) return
@@ -46,6 +42,16 @@ const ProductScreen = ({ navigation, route }: Props) => {
             image: product.img || '',
             nombre
         })
+    }
+
+    const saveOrUpdate = async() => {
+        if (id.length > 0) {
+            updateProduct(categoryId, nombre, id)
+        } else {
+            const tempCategorieId = categoryId || categories[0]._id
+            const newProduct = await addProduct(tempCategorieId, nombre )
+            onChange(newProduct._id, '_id')
+        }
     }
 
     return (
@@ -77,30 +83,33 @@ const ProductScreen = ({ navigation, route }: Props) => {
 
                 <Button
                     title='Save'
-                    onPress={() => { }}
+                    onPress={saveOrUpdate}
                     color={'#5856D6'}
                 />
 
-                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-                    <Button
-                        title='Camera'
-                        onPress={() => { }}
-                        color={'#5856D6'}
-                    />
-                    <View style={{ width: 100 }} />
-                    <Button
-                        title='Gallery'
-                        onPress={() => { }}
-                        color={'#5856D6'}
-                    />
-                </View>
+                {_id.length > 0 && (
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+                        <Button
+                            title='Camera'
+                            onPress={() => { }}
+                            color={'#5856D6'}
+                        />
+                        <View style={{ width: 100 }} />
+                        <Button
+                            title='Gallery'
+                            onPress={() => { }}
+                            color={'#5856D6'}
+                        />
+                    </View>
+                )}
+
 
 
                 {image.length !== 0 &&
                     <Image
                         source={{ uri: image }}
                         style={{
-                            marginTop:20,
+                            marginTop: 20,
                             width: '100%',
                             height: 300
                         }}
