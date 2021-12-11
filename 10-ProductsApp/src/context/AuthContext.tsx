@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import { createContext } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import cafeApi from "../api/cafeApi";
-import { Usuario, LoginResponse, LoginData, RegisterData } from '../interfaces/appInterfaces';
+import { Usuario, LoginResponse, LoginData, RegisterData } from '../interfaces/loginInterfaces';
 import { authReducer, AuthState } from './authReducer';
 
 type AuthContextProps = {

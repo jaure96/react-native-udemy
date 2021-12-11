@@ -1,4 +1,4 @@
-import { Usuario } from '../interfaces/appInterfaces';
+import { Usuario } from '../interfaces/loginInterfaces';
 
 
 export interface AuthState {
