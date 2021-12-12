@@ -1,4 +1,5 @@
-package com.calculator;
+//package com.calculator;
+package com.xabierjauregi.calculator;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
