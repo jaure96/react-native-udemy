@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { createContext, useState } from 'react';
 import { Producto, ProductsResponse } from '../interfaces/productsInterfaces';
 import cafeApi from '../api/cafeApi';
+import { ImagePickerResponse } from 'react-native-image-picker';
 
 type ProductsContextProps = {
     products: Producto[],
@@ -31,7 +32,7 @@ export const ProductsProvider = ({ children }: any) => {
         setProducts([...resp.data.productos])
     }
 
-    const addProduct = async (categoryId: string, productName: string):Promise<Producto> => {
+    const addProduct = async (categoryId: string, productName: string): Promise<Producto> => {
         const resp = await cafeApi.post<Producto>('/productos', {
             nombre: productName,
             categoria: categoryId
@@ -51,13 +52,27 @@ export const ProductsProvider = ({ children }: any) => {
     const deleteProduct = async (id: string) => {
 
     }
+
     const loadProductById = async (id: string): Promise<Producto> => {
         const resp = await cafeApi.get<Producto>(`/productos/${id}`)
         return resp.data
     }
-    //TODO cambian any
-    const updloadImage = async (data: any, id: string) => {
 
+    const updloadImage = async (data: ImagePickerResponse, id: string) => {
+        const fileToUpload = {
+            uri: data.assets?.[0].uri,
+            type: data.assets?.[0].type,
+            name: data.assets?.[0].fileName
+        }
+        const formData = new FormData()
+        formData.append('archivo', fileToUpload)
+
+        try {
+            const resp = await cafeApi.put(`/uploads/productos/${id}`, formData)
+            console.log(resp)
+        } catch (error) {
+            console.log({ error })
+        }
     }
 
     return (

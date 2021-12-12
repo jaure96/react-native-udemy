@@ -1,5 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { ActivityIndicator, Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 import { TextInput } from 'react-native-gesture-handler'
@@ -14,13 +15,14 @@ const ProductScreen = ({ navigation, route }: Props) => {
 
     const { id = '', name = '' } = route.params
     const { categories, isLoading: catLoading } = useCategories()
-    const { loadProductById, addProduct, updateProduct } = useContext(ProductsContext)
+    const { loadProductById, addProduct, updateProduct, updloadImage } = useContext(ProductsContext)
     const { _id, categoryId, nombre, image, onChange, form, setFormValue } = useForm({
         _id: id,
         categoryId: '',
         nombre: name,
         image: ''
     })
+    const [tempUri, setTempUri] = useState<string>()
 
 
     useEffect(() => {
@@ -44,14 +46,38 @@ const ProductScreen = ({ navigation, route }: Props) => {
         })
     }
 
-    const saveOrUpdate = async() => {
+    const saveOrUpdate = async () => {
         if (id.length > 0) {
             updateProduct(categoryId, nombre, id)
         } else {
             const tempCategorieId = categoryId || categories[0]._id
-            const newProduct = await addProduct(tempCategorieId, nombre )
+            const newProduct = await addProduct(tempCategorieId, nombre)
             onChange(newProduct._id, '_id')
         }
+    }
+
+    const takePhoto = () => {
+        launchCamera({
+            mediaType: 'photo',
+            quality: 0.5,
+        }, (resp) => {
+            if (resp.didCancel) return
+            if (!resp.assets?.[0].uri) return
+            setTempUri(resp.assets?.[0].uri)
+            updloadImage(resp, _id)
+        })
+    }
+
+    const getPhotoFromGallery = () => {
+        launchImageLibrary({
+            mediaType: 'photo',
+            quality: 0.5,
+        }, (resp) => {
+            if (resp.didCancel) return
+            if (!resp.assets?.[0].uri) return
+            setTempUri(resp.assets?.[0].uri)
+            updloadImage(resp, _id)
+        })
     }
 
     return (
@@ -91,13 +117,13 @@ const ProductScreen = ({ navigation, route }: Props) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
                         <Button
                             title='Camera'
-                            onPress={() => { }}
+                            onPress={takePhoto}
                             color={'#5856D6'}
                         />
                         <View style={{ width: 100 }} />
                         <Button
                             title='Gallery'
-                            onPress={() => { }}
+                            onPress={getPhotoFromGallery}
                             color={'#5856D6'}
                         />
                     </View>
@@ -105,7 +131,7 @@ const ProductScreen = ({ navigation, route }: Props) => {
 
 
 
-                {image.length !== 0 &&
+                {(image.length !== 0 && !tempUri) &&
                     <Image
                         source={{ uri: image }}
                         style={{
@@ -113,7 +139,19 @@ const ProductScreen = ({ navigation, route }: Props) => {
                             width: '100%',
                             height: 300
                         }}
-                    />}
+                    />
+                }
+
+                {tempUri &&
+                    <Image
+                        source={{ uri: tempUri }}
+                        style={{
+                            marginTop: 20,
+                            width: '100%',
+                            height: 300
+                        }}
+                    />
+                }
 
             </ScrollView>
         </View>
